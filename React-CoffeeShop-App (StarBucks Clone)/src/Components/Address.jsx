@@ -2,13 +2,29 @@ import Form from "react-bootstrap/Form";
 import { Container } from "react-bootstrap";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import { useContext, useState } from "react";
-
+import { MyContext } from "./Order";
 import axios from "axios";
 import { message } from "antd";
+
 const Address = () => {
- 
-    <Container>
-    <div id="form" style={{display:"none"}}>
+    const [input, setinput] = useState({});
+    const handleinput = (e) => {
+        let name = e.target.name;
+        let value = e.target.value;
+        setinput((values) => ({ ...values, [name]: value }));
+        console.log(input);
+      };
+
+    const handleSubmit = () => {
+        let api = "http://localhost:3000/coffee";
+        axios.post(api, input).then((res) => {
+          console.log(res);
+          message.success("item Successfully Added!!!");
+        });
+      };
+      return(<>
+          <Container>
+    <div id="form">
       <h1>Add Address</h1>
       <FloatingLabel
         controlId="floatingInput"
@@ -18,19 +34,19 @@ const Address = () => {
         <Form.Control
           type="text"
           placeholder="name@example.com"
-          onChange={fun1}
+          onChange={handleinput}
           name="product"
         />
       </FloatingLabel>
       <FloatingLabel
         controlId="floatingInput"
-        label="Name"
+        label="Customer Name"
         className="mb-3"
       >
         <Form.Control
           type="text"
           placeholder="name@example.com"
-          onChange={fun1}
+          onChange={handleinput}
           name="name"
         />
       </FloatingLabel>
@@ -42,7 +58,7 @@ const Address = () => {
         <Form.Control
           type="text"
           placeholder="name@example.com"
-          onChange={fun1}
+          onChange={handleinput}
           name="contact"
         />
       </FloatingLabel>
@@ -54,7 +70,7 @@ const Address = () => {
         <Form.Control
           type="text"
           placeholder="name@example.com"
-          onChange={fun1}
+          onChange={handleinput}
           name="address"
         />
       </FloatingLabel>
@@ -66,7 +82,7 @@ const Address = () => {
         <Form.Control
           type="text"
           placeholder="name@example.com"
-          onChange={fun1}
+          onChange={handleinput}
           name="apartment"
         />
       </FloatingLabel>
@@ -78,7 +94,7 @@ const Address = () => {
         <Form.Control
           type="text"
           placeholder="name@example.com"
-          onChange={fun1}
+          onChange={handleinput}
           name="city"
         />
       </FloatingLabel>
@@ -90,7 +106,7 @@ const Address = () => {
         <Form.Control
           type="text"
           placeholder="name@example.com"
-          onChange={fun1}
+          onChange={handleinput}
           name="state"
         />
       </FloatingLabel>
@@ -98,6 +114,10 @@ const Address = () => {
     <button style={{ width: "100%" }} onClick={handleSubmit}>
       Proceed To Checkout
     </button>
+
   </Container>
+  </>)
+
+  
 };
 export default Address;

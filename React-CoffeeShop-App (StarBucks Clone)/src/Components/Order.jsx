@@ -1,43 +1,24 @@
 import { Container } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 import { useState } from "react";
 import { createContext } from "react";
-import Address from "./Address";
+import Address from "./Address.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
-import axios from "axios";
-import FloatingLabel from "react-bootstrap/FloatingLabel";
-import Form from "react-bootstrap/Form";
-import { message } from "antd";
+
 const MyContext = createContext();
 const Order = () => {
-  const [input, setinput] = useState({});
+  
   const [user1, setuser1] = useState("₹280");
   const [user2, setuser2] = useState("₹380");
   const [user3, setuser3] = useState("₹295");
   const [user4, setuser4] = useState("₹450");
   const [user5, setuser5] = useState("₹445");
-  const handleSubmit = () => {
-    let api = "http://localhost:3000/coffee";
-    axios.post(api, input).then((res) => {
-      console.log(res);
-      message.success("Product Successfully Added!!!");
-    });
-  };
+  
   const fun1 = (e) => {
     document.getElementById("cont1").style.display = "block";
     window.scrollTo(0, 1100);
-    document.getElementById("cart").style.display = "block";
-    document.getElementById("form").style.display ="block";
-    const [input, setinput] = useState({});
-    
-      let name = e.target.name;
-      let value = e.target.value;
-      setinput((values) => ({ ...values, [name]: value }));
-      console.log(input);
-    
-    
-  
+    document.getElementById("cart").style.display = "block";  
   };
   const fun2 = () => {
     document.getElementById("cont2").style.display = "block";
@@ -173,111 +154,22 @@ const Order = () => {
       </div>
       <Container>
         <div id="cont1" style={{ display: "none" }}>
-
+          
           <img src="src/assets/images/o1.png" alt="" />
 
           <button onClick={dis1}>Discard Item</button>
+          <br /><br />
           <p id="total">
             {" "}
             <span style={{ fontSize: "20px" }}> Price </span>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
-            ₹380 <br /> Delivery charges : ₹50 <br /> Sub
+            ₹280 <br /> Delivery charges : ₹50 <br /> Sub
             Total&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            : ₹430
+            : ₹330
           </p>
-          
-          <Container>
-          <div id="form" style={{display:"none"}}>
-            <h1>Add Address</h1>
-            <FloatingLabel
-              controlId="floatingInput"
-              label="Item Name"
-              className="mb-3"
-            >
-              <Form.Control
-                type="text"
-                placeholder="name@example.com"
-                onChange={fun1}
-                name="product"
-              />
-            </FloatingLabel>
-            <FloatingLabel
-              controlId="floatingInput"
-              label="Name"
-              className="mb-3"
-            >
-              <Form.Control
-                type="text"
-                placeholder="name@example.com"
-                onChange={fun1}
-                name="name"
-              />
-            </FloatingLabel>
-            <FloatingLabel
-              controlId="floatingInput"
-              label="Contact"
-              className="mb-3"
-            >
-              <Form.Control
-                type="text"
-                placeholder="name@example.com"
-                onChange={fun1}
-                name="contact"
-              />
-            </FloatingLabel>
-            <FloatingLabel
-              controlId="floatingInput"
-              label="Address"
-              className="mb-3"
-            >
-              <Form.Control
-                type="text"
-                placeholder="name@example.com"
-                onChange={fun1}
-                name="address"
-              />
-            </FloatingLabel>
-            <FloatingLabel
-              controlId="floatingInput"
-              label="Apartment"
-              className="mb-3"
-            >
-              <Form.Control
-                type="text"
-                placeholder="name@example.com"
-                onChange={fun1}
-                name="apartment"
-              />
-            </FloatingLabel>
-            <FloatingLabel
-              controlId="floatingInput"
-              label="City"
-              className="mb-3"
-            >
-              <Form.Control
-                type="text"
-                placeholder="name@example.com"
-                onChange={fun1}
-                name="city"
-              />
-            </FloatingLabel>
-            <FloatingLabel
-              controlId="floatingInput"
-              label="State"
-              className="mb-3"
-            >
-              <Form.Control
-                type="text"
-                placeholder="name@example.com"
-                onChange={fun1}
-                name="state"
-              />
-            </FloatingLabel>
-          </div>
-          <button style={{ width: "100%" }} onClick={handleSubmit}>
-            Proceed To Checkout
-          </button>
-        </Container>
+          <MyContext.Provider value={{ user1 }}>
+            <Address />
+          </MyContext.Provider>
         </div>
 
         <div id="cont2" style={{ display: "none" }}>
@@ -345,6 +237,7 @@ const Order = () => {
           </MyContext.Provider>
         </div>
       </Container>
+    
     </>
   );
 };
